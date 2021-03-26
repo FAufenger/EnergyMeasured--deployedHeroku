@@ -46,10 +46,11 @@ db = SQLAlchemy(app)
 # create route that renders index.html template
 @app.route("/")
 def index():
+    percentDB = 'us_percentage'
+    percent = db.session.query(percentDB)
+    for state in percent:
+        print(state.State)
     return render_template("index.html")
-    # percent = db.session.query(us_percentage)
-    # for state in percent:
-    #     print(state.STATE)
     
 
     # # Return the template with the teams list passed in
@@ -89,6 +90,9 @@ def findData():
     # Return the template with the teams list passed in
     #return render_template('index.html', percent=percent)
     return render_template("index.html")
+
+    
+### Do I need to put it into a json format?? ##
 #def pals():
     # result_percent = db.session.query('select * from us_percentage', con=engine)
     #results = db.session.query(us_percentage.STATE).all()

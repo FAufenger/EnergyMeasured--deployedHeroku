@@ -20,7 +20,7 @@ class Percent(db.Model):
     BiomassOther = db.Column(db.Float)
 
 
-    def __init__(self, YEAR, STATE, TYPE_OF_PRODUCER, ENERGY_SOURCE, GENERATION_Mwh):
+    def __init__(self, State,Nuclear,Coal,NaturalGas,Petroleum,Hydro,Geothermal,SolarPV,Wind,BiomassOther):
         self.State = State
         self.Nuclear = Nuclear
         self.Coal = Coal
@@ -40,7 +40,6 @@ class Percent(db.Model):
 
 
 
-State,Nuclear,Coal,NaturalGas,Petroleum,Hydro,Geothermal,SolarPV,Wind,BiomassOther
 
 
 ## Second Table##
