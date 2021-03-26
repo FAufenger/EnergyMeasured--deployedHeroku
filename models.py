@@ -32,17 +32,14 @@ class Percent(db.Model):
         self.Wind = Wind
         self.BiomassOther = BiomassOther
 
-   def __repr__(self):
-        return f"{self.State}:{self.Nuclear}:{self.Coal}: 
-                {self.NaturalGas}:{self.Petroleum}:
-                {self.Hydro}:{self.Geothermal}:{self.SolarPV}:
-                {self.Wind}:{self.BiomassOther}:"
+    def __repr__(self):
+            return f"{self.State}:{self.Nuclear}:{self.Coal}:{self.NaturalGas}:{self.Petroleum}:{self.Hydro}:{self.Geothermal}:{self.SolarPV}:{self.Wind}:{self.BiomassOther}:"
 
 
 
 
 
-## Second Table##
+## Second Table## ?!?!
 
 #class BaseModel(db.Model):
 #     """Base data model for all objects"""
