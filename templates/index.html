@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Pet Pals!</title>
     <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
 </head>
 
@@ -19,26 +20,30 @@
 
         <div class="row">
             <div class="col-md-12">
-                <h2>Look at all of the current energy usage</h2>
-                <div id="plot"></div>
-                <!-- {% for state in percent%}
-                    <h1>{{state.state}}</h1>
-                {% endfor%} -->
+                <!-- <h2>Look at all of the current energy usage</h2> -->
+                <div id="circlePlot"></div>
+                
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
                 <h2>More words</a></h2>
+                {% for state in all_states %}
+                    <h1>{{state}}</h1>
+                {% endfor%}
             </div>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
-
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="../static/js/logic.js"></script>
-    <!--<script src="{{ url_for('static', filename='js/logic.js') }}"></script>-->
+    <!-- <script src="{{ url_for('static', filename='js/logic.js') }}"></script> -->
+
+    <!-- Added below link to stop favicon.ico error-->
+    <link rel='icon' href='favicon.ico' type='image/x-icon/'>
+  
 </body>
 
 </html>

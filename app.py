@@ -1,10 +1,4 @@
 # # import necessary libraries
-# #import os
-# from flask import ( Flask,
-#                     render_template,
-#                     jsonify,
-#                     request,
-#                     redirect)
 
 # from flask_sqlalchemy import SQLAlchemy
 # from sqlalchemy import *
@@ -15,12 +9,17 @@
 
 import numpy as np
 
+import os
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 
-from flask import Flask, jsonify
+from flask import ( Flask,
+                    render_template,
+                    jsonify,
+                    request,
+                    redirect)
 
 ###################
 # Database Setup
@@ -87,40 +86,54 @@ def index():
     # Convert list of tuples into normal list
     all_states = list(np.ravel(results))
 
-    return jsonify(all_states)
+    return render_template('index.html', all_states = all_states)
+    #return jsonify(pet_data)
 
 
-    # percentDB = 'SELECT * FROM us_percentage'
-    # #percentDB = 'us_percentage'
-    # #percentDB = 'State'
-    # percent = db.session.query(percentDB)
-    # # for state in percent:
-    # #     print(state.State)
-    # return render_template("index.html", percent=percent)
+
+@app.route("/api/data")
+
+def statePercent():
+    session = Session(engine)
     
+    results = session.query(Percent.State, Percent.Nuclear,Percent.Coal,Percent.Natural_Gas,Percent.Petroleum,Percent.Hydro,Percent.Geothermal,Percent.Solar_PV,Percent.Wind,Percent.Biomass_and_Other).all()
+    #results = session.query(us_percentage.STATE).all()
+    session.close()
+    
+    # Getting each percentage in a a liat 
+    Nuclear = [result[1] for result in results]
+    Coal = [result[2] for result in results]
+    Natural_Gas = [result[3] for result in results]
+    Petroleum = [result[4] for result in results]
+    Hydro = [result[5] for result in results]
+    Geothermal = [result[6] for result in results]
+    Solar_PV = [result[7] for result in results]
+    Wind = [result[8] for result in results]
+    Biomass_and_Other = [result[9] for result in results]
 
-    # # Return the template with the teams list passed in
-    # return render_template('index.html', percent=percent)
-    # #return render_template("index.html")
+    # Value for first state
+    values = Nuclear[0],Coal[0],Natural_Gas[0],Petroleum[0],Hydro[0],Geothermal[0],Solar_PV[0],Wind[0],Biomass_and_Other[0]
+            
 
-
-# Query the database and send the jsonified results
-# @app.route("/send", methods=["GET", "POST"])
-# def send():
-#     if request.method == "POST":
-#         name = request.form["petName"]
-#         lat = request.form["petLat"]
-#         lon = request.form["petLon"]
-
-#         pet = Pet(name=name, lat=lat, lon=lon)
-#         db.session.add(pet)
-#         db.session.commit()
-#         return redirect("/", code=302)
-
-#     return render_template("form.html")
-
-
-# @app.route("/api/data")
+    result_percent_data = [{
+        "type": "pie",
+        "showlegend": "false",
+        "rotation": 0,
+        "textinfo": "text",
+        "textposition": "inside",
+        "values":[values],
+        "text": ["0","1","2","3","4","5","6","7","8"],
+        "hoverinfo": "skip",
+        "marker": { 
+            "colors": ["#ffd300", "#d21404", "#a0d080", "#90c070", "#80b060", "#70a050", "#609040", "#508030", "#407030" ],
+            "labels": ["NA","0", "1", "2", "3","4","5","6","7"],
+            "hoverinfo": "skip" 
+        },
+        "title": {"text": "<b>Percentage Energy Usage</b> <br> Per State",
+                "font": { "size": 18} },
+    }]
+    
+    return jsonify(result_percent_data)
 
 # def findData():
 #     find = 'us_percentage'
@@ -160,32 +173,18 @@ if __name__ == "__main__":
 
 
 
-    
-### Do I need to put it into a json format?? ##
-#def pals():
-    # result_percent = db.session.query('select * from us_percentage', con=engine)
-    #results = db.session.query(us_percentage.STATE).all()
+# Query the database and send the jsonified results
+# @app.route("/send", methods=["GET", "POST"])
+# def send():
+#     if request.method == "POST":
+#         name = request.form["petName"]
+#         lat = request.form["petLat"]
+#         lon = request.form["petLon"]
 
-    # hover_text = [result[0] for result in results]
-    # lat = [result[1] for result in results]
-    # lon = [result[2] for result in results]
+#         pet = Pet(name=name, lat=lat, lon=lon)
+#         db.session.add(pet)
+#         db.session.commit()
+#         return redirect("/", code=302)
 
-    # result_percent_data = [{
-    #     "type": "scattergeo",
-    #     "locationmode": "USA-states",
-    #     "lat": lat,
-    #     "lon": lon,
-    #     "text": hover_text,
-    #     "hoverinfo": "text",
-    #     "marker": {
-    #         "size": 50,
-    #         "line": {
-    #             "color": "rgb(8,8,8)",
-    #             "width": 1
-    #         },
-    #     }
-    # }]
-    
-#    return jsonify(results)
-
+#     return render_template("form.html")
 
