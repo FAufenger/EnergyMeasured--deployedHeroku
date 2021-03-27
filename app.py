@@ -8,6 +8,8 @@ from flask import ( Flask,
 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
+from flask_migrate import Migrate
+from models import db, Percent
 metadata = MetaData()
 
 ###################
@@ -22,14 +24,13 @@ app = Flask(__name__)
 # Connect to local database
 
 # Adding passcode for postgres
-code_source_passcode = open('/Users/Richa/Desktop/Files/SQL_private_connect.py') 
+#code_source_passcode = open('/Users/Richa/Desktop/Files/SQL_private_connect.py') 
 # Add you password here
 #code_source_passcode = open('/Users/......./SQL_private_connect.py') 
-
-sql_private_connect = code_source_passcode.read()
-
-#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///db.sqlite"
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{sql_private_connect}@localhost:5432/Energy_DB'
+#sql_private_connect = code_source_passcode.read()
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '')
+#app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{sql_private_connect}@localhost:5432/Energy_DB'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///US_Energy_DB.sqlite'
 
 # Remove tracking modifications
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -49,7 +50,9 @@ db = SQLAlchemy(app)
 # create route that renders index.html template
 @app.route("/")
 def index():
-    percentDB = '* FROM us_percentage'
+    #percentDB = 'SELECT * FROM us_percentage'
+    percentDB = 'us_percentage'
+    #percentDB = 'State'
     percent = db.session.query(percentDB)
     # for state in percent:
     #     print(state.State)
