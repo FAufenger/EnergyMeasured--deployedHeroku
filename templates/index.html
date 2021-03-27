@@ -21,6 +21,9 @@
             <div class="col-md-12">
                 <h2>Look at all of the current energy usage</h2>
                 <div id="plot"></div>
+                {% for state in percent%}
+                    <h1>{{state.state}}</h1>
+                {% endfor%}
             </div>
         </div>
 

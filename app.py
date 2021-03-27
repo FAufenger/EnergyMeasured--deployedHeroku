@@ -34,7 +34,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{sql_private_connect}@loc
 # Remove tracking modifications
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+#migrate = Migrate(app, db)
+
 db = SQLAlchemy(app)
+
 
 # pet = create_classes(db)
 
@@ -46,11 +49,11 @@ db = SQLAlchemy(app)
 # create route that renders index.html template
 @app.route("/")
 def index():
-    percentDB = 'us_percentage'
+    percentDB = '* FROM us_percentage'
     percent = db.session.query(percentDB)
-    for state in percent:
-        print(state.State)
-    return render_template("index.html")
+    # for state in percent:
+    #     print(state.State)
+    return render_template("index.html", percent=percent)
     
 
     # # Return the template with the teams list passed in
@@ -91,6 +94,29 @@ def findData():
     #return render_template('index.html', percent=percent)
     return render_template("index.html")
 
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+
+
+# @app.route('/api/data2', methods = ['POST', 'GET'])
+# def login():
+#     if request.method == 'GET':
+#         return "Login via the login Form"
+     
+#     if request.method == 'POST':
+#         state = request.form['name']
+#         year = request.form['age']
+#         new_user = InfoModel(name=name, age=age)
+#         db.session.add(new_user)
+#         db.session.commit()
+#         return f"Done!!"
+
+
+
+
+
     
 ### Do I need to put it into a json format?? ##
 #def pals():
@@ -120,5 +146,3 @@ def findData():
 #    return jsonify(results)
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
