@@ -1,4 +1,4 @@
-YEAR,STATE,TYPE OF PRODUCER,ENERGY SOURCE,GENERATION Mwh
+year,state,type_of_producer,energy_source,generation_mhw
 1990,AK,Total Electric Power Industry,Total,"5,599,506"
 1990,AK,Total Electric Power Industry,Coal,"510,573"
 1990,AK,Total Electric Power Industry,Hydroelectric Conventional,"974,521"

@@ -1,22 +1,26 @@
-# import necessary libraries
-#import os
-from flask import ( Flask,
-                    render_template,
-                    jsonify,
-                    request,
-                    redirect)
+# # import necessary libraries
+# #import os
+# from flask import ( Flask,
+#                     render_template,
+#                     jsonify,
+#                     request,
+#                     redirect)
 
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import *
-from flask_migrate import Migrate
-from models import db, Percent
-metadata = MetaData()
+# from flask_sqlalchemy import SQLAlchemy
+# from sqlalchemy import *
+# from flask_migrate import Migrate
+# from models import db, Percent
 
-###################
-# Flask Setup
-###################
+# metadata = MetaData()
 
-app = Flask(__name__)
+import numpy as np
+
+import sqlalchemy
+from sqlalchemy.ext.automap import automap_base
+from sqlalchemy.orm import Session
+from sqlalchemy import create_engine, func
+
+from flask import Flask, jsonify
 
 ###################
 # Database Setup
@@ -30,17 +34,37 @@ app = Flask(__name__)
 #sql_private_connect = code_source_passcode.read()
 #app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '')
 #app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{sql_private_connect}@localhost:5432/Energy_DB'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///US_Energy_DB.sqlite'
-
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///US_Energy_DB.sqlite'
 # Remove tracking modifications
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #migrate = Migrate(app, db)
 
-db = SQLAlchemy(app)
+#db = SQLAlchemy(app)
 
 
-# pet = create_classes(db)
+
+
+
+# reflect an existing database into a new model
+Base = automap_base()
+
+# Create engine
+engine = create_engine("sqlite:///US_Energy_DB.sqlite")
+
+# reflect the tables
+Base.prepare(engine, reflect=True)
+
+# Save reference to the table
+#Classes is part of mapping and is required
+Percent = Base.classes.us_percentage
+
+
+###################
+# Flask Setup
+###################
+
+app = Flask(__name__)
 
 
 ###################
@@ -50,13 +74,29 @@ db = SQLAlchemy(app)
 # create route that renders index.html template
 @app.route("/")
 def index():
-    #percentDB = 'SELECT * FROM us_percentage'
-    percentDB = 'us_percentage'
-    #percentDB = 'State'
-    percent = db.session.query(percentDB)
-    # for state in percent:
-    #     print(state.State)
-    return render_template("index.html", percent=percent)
+
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of all passenger names"""
+    # Query all passengers
+    results = session.query(Percent.State).all()
+
+    session.close()
+
+    # Convert list of tuples into normal list
+    all_states = list(np.ravel(results))
+
+    return jsonify(all_states)
+
+
+    # percentDB = 'SELECT * FROM us_percentage'
+    # #percentDB = 'us_percentage'
+    # #percentDB = 'State'
+    # percent = db.session.query(percentDB)
+    # # for state in percent:
+    # #     print(state.State)
+    # return render_template("index.html", percent=percent)
     
 
     # # Return the template with the teams list passed in
@@ -80,22 +120,22 @@ def index():
 #     return render_template("form.html")
 
 
-@app.route("/api/data")
+# @app.route("/api/data")
 
-def findData():
-    find = 'us_percentage'
-    percent = db.session.query(find)
-    for state in percent:
-        print(state.STATE)
+# def findData():
+#     find = 'us_percentage'
+#     percent = db.session.query(find)
+#     for state in percent:
+#         print(state.STATE)
     
-    # table_name_string = request.get_json().get('us_percentage')
-    # selected_table = db.Table(table_name_string, metadata, autoload=True)
-    # query = selected_table.select()
-    # print(query)
+#     # table_name_string = request.get_json().get('us_percentage')
+#     # selected_table = db.Table(table_name_string, metadata, autoload=True)
+#     # query = selected_table.select()
+#     # print(query)
 
-    # Return the template with the teams list passed in
-    #return render_template('index.html', percent=percent)
-    return render_template("index.html")
+#     # Return the template with the teams list passed in
+#     #return render_template('index.html', percent=percent)
+#     return render_template("index.html")
 
 
 if __name__ == "__main__":

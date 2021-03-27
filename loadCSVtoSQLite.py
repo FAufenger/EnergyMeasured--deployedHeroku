@@ -24,13 +24,13 @@ class PercentUS(Base):
     State = Column(Text)
     Nuclear = Column(Integer)
     Coal = Column(Integer)
-    NaturalGas = Column(Integer)
+    Natural_Gas = Column(Integer)
     Petroleum = Column(Integer)
     Hydro = Column(Integer)
     Geothermal = Column(Integer)
-    SolarPV = Column(Integer)
+    Solar_PV = Column(Integer)
     Wind = Column(Integer)
-    Biomass_Other = Column(Integer)
+    Biomass_and_Other = Column(Integer)
 
 class us_generation_power(Base):
     __tablename__ = 'us_generation'
