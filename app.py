@@ -88,7 +88,7 @@ def statePercent():
         "type": "pie",
         "showlegend": False,
         "rotation": 0,
-        "textinfo": "text",
+        "textinfo": "text+percent",
         "textposition": "inside",
         "values":results[0][1:],
         "text": ["Nuclear","Coal","Natural Gas","Petroleum","Hydro","Geothermal","Solar-PV","Wind","Biomass/ Other"],
