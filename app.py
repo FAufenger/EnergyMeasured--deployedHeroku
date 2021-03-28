@@ -29,6 +29,7 @@ Base.prepare(engine, reflect=True)
 # Save reference to the table
 #Classes is part of mapping and is required
 Percent = Base.classes.us_percentage
+Generation= Base.classes.us_percentage
 
 app = Flask(__name__)
 
@@ -38,11 +39,9 @@ def home():
 
      # Create our session (link) from Python to the DB
     session = Session(engine)
-
-    """Return a list of all passenger names"""
+    """Return a list of all states"""
     # Query all passengers
     results = session.query(Percent.State).all()
-
     session.close()
 
     # Convert list of tuples into normal list
@@ -64,9 +63,7 @@ def option3():
 @app.route("/api/data")
 def statePercent():
     session = Session(engine)
-    
     results = session.query(Percent.State, Percent.Nuclear,Percent.Coal,Percent.Natural_Gas,Percent.Petroleum,Percent.Hydro,Percent.Geothermal,Percent.Solar_PV,Percent.Wind,Percent.Biomass_and_Other).all()
-    #results = session.query(us_percentage.STATE).all()
     session.close()
     
     # # Getting each percentage in a a liat 
@@ -100,6 +97,37 @@ def statePercent():
             "hoverinfo": "skip" 
         },
         "title": {"text": f'<b>Percentage Energy Usage</b> <br> {results[0][0]}',
+                "font": { "size": 18} },
+    }]
+    
+    return jsonify(result_percent_data)
+
+
+@app.route("/api/data2")
+def stateGeneration():
+    session = Session(engine)
+    results = session.query(Generation.YEAR, Generation.STATE, Generation.STATE)
+    session.close()
+    
+    # # Getting each percentage in a a liat 
+    # Nuclear = [result[1] for result in results]
+    # Coal = [result[2] for result in results]
+    # Natural_Gas = [result[3] for result in results]
+    # Petroleum = [result[4] for result in results]
+    # Hydro = [result[5] for result in results]
+    # Geothermal = [result[6] for result in results]
+    # Solar_PV = [result[7] for result in results]
+    # Wind = [result[8] for result in results]
+    # Biomass_and_Other = [result[9] for result in results]
+
+    # # Value for first state
+    # values = Nuclear[0],Coal[0],Natural_Gas[0],Petroleum[0],Hydro[0],Geothermal[0],Solar_PV[0],Wind[0],Biomass_and_Other[0]
+            
+
+    result_percent_data = [{
+        "type": "bar",
+        
+        "title": {"text": f'<b>Percentage Energy Usage 2019</b> <br> {results[0][0]}',
                 "font": { "size": 18} },
     }]
     

@@ -1,4 +1,4 @@
-Entity,Code,Year,Solar Generation - TWh,Wind Generation -TWh,Hydro Generation - TWh,Geo Biomass Other - TWh
+Country,Code,Year,Solar,Wind,Hydro,Geo_Biomass_Other
 Africa,,1965,0,0,13.905635174733,0
 Africa,,1966,0,0,15.510004137511,0
 Africa,,1967,0,0,16.190636359103998,0
