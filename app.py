@@ -64,7 +64,7 @@ def option2():
 def option3():
     return render_template("map.html")
 
-@app.route("/api/data")
+@app.route("/api/data1")
 def statePercent():
     session = Session(engine)
     results = session.query(Percent_US.State, Percent_US.Nuclear,Percent_US.Coal,Percent_US.Natural_Gas,Percent_US.Petroleum,Percent_US.Hydro,Percent_US.Geothermal,Percent_US.Solar_PV,Percent_US.Wind,Percent_US.Biomass_and_Other).all()
