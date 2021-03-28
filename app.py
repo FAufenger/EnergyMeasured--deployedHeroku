@@ -85,7 +85,7 @@ def statePercent():
     # values = Nuclear[0],Coal[0],Natural_Gas[0],Petroleum[0],Hydro[0],Geothermal[0],Solar_PV[0],Wind[0],Biomass_and_Other[0]
             
 
-    result_percent_data = [{
+    result_percent_data1 = [{
         "type": "pie",
         "showlegend": False,
         "rotation": 0,
@@ -104,7 +104,7 @@ def statePercent():
                 "font": { "size": 18} },
     }]
     
-    return jsonify(result_percent_data)
+    return jsonify(result_percent_data1)
 
 
 
@@ -116,9 +116,72 @@ def stateGeneration():
     
     test2 = list(np.ravel(results2))
     
-       
-    return jsonify(results2)
+    # List of lists for axis values 
+    year_list = []
+    coal_list = []
+    natural_gas_list = []
+    nuclear_list = []
+    renewables_list = []
+    petroleum_and_other_list = []
 
+
+    for entry in results2:
+        year_list.append(entry[0])
+        coal_list.append(entry[1])
+        natural_gas_list.append(entry[2])
+        nuclear_list.append(entry[3])
+        renewables_list.append(entry[4])
+        petroleum_and_other_list.append(entry[5])
+
+
+    trace1 = {
+        "x": year_list,
+
+        "y": coal_list,
+        "name": 'Coal',
+        "marker": {"color": "#2C2624"},
+        "type": "lines+markers"
+    }
+    
+    trace2 = {
+        "x": year_list,
+
+        "y": natural_gas_list,
+        "name": 'Natural Gas',
+        "marker": {"color": "#1CA2ED"},
+        "type": "lines+markers"
+    }
+
+    trace3 = {
+        "x": year_list,
+
+        "y": nuclear_list,
+        "name": 'Nuclear',
+        "marker": {"color": "#E5ED1C"},
+        "type": "lines+markers"
+    }
+
+    trace4 = {
+        "x": year_list,
+
+        "y": renewables_list,
+        "name": 'Renewable',
+        "marker": {"color": "#36C92C"},
+        "type": "lines+markers"
+    }    
+    
+    trace5 = {
+        "x": year_list,
+
+        "y": petroleum_and_other_list,
+        "name": 'Petroleum and Other',
+        "marker": {"color": "#C92C2C"},
+        "type": "lines+markers"
+    }    
+
+    data = [trace1, trace2, trace3, trace4, trace5]
+    
+    return jsonify(data)
 
 
 @app.route("/api/data3")
@@ -128,7 +191,7 @@ def NoElectricityWorld():
     session3.close()
     
     test3 = list(np.ravel(results3))
-       
+
     return jsonify(results3)
 
 

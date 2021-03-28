@@ -8,15 +8,37 @@ function buildPlot2() {
         const data = response;
 
         const layout = {
-            width: 400,
-            height: 400,
-            margin: { t: 50, r: 500, l: 500, b: 50 }
-        };
+            title: 'US Power Generation',
+            xaxis: {tickfont: {
+                size: 14,
+                color: 'rgb(107, 107, 107)'
+              }},
+            yaxis: {
+              title: 'Billion kilowatthours',
+              titlefont: {
+                size: 16,
+                color: 'rgb(107, 107, 107)'
+              },
+              tickfont: {
+                size: 14,
+                color: 'rgb(107, 107, 107)'
+              }
+            },
+            legend: {
+              x: 0,
+              y: 1.0,
+              bgcolor: 'rgba(255, 255, 255, 0)',
+              bordercolor: 'rgba(255, 255, 255, 0)'
+            },
+            barmode: 'group',
+            bargap: 0.15,
+            bargroupgap: 0.2
+          };
 
-        Plotly.newPlot("barPlot", data, layout);
+        Plotly.newPlot("barPlotUS", data, layout);
     });
 }
 
 
 
-// buildPlot2();
+buildPlot2();
