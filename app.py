@@ -28,8 +28,12 @@ Base.prepare(engine, reflect=True)
 
 # Save reference to the table
 #Classes is part of mapping and is required
-Percent = Base.classes.us_percentage
-Generation= Base.classes.us_percentage
+Percent_US = Base.classes.us_percentage
+Generation_US= Base.classes.us_generation
+No_Electricity_World = Base.classes.world_no_electricity
+Generation_World = Base.classes.world_generation
+Consumption_World = Base.classes.world_consumption
+
 
 app = Flask(__name__)
 
@@ -41,7 +45,7 @@ def home():
     session = Session(engine)
     """Return a list of all states"""
     # Query all passengers
-    results = session.query(Percent.State).all()
+    results = session.query(Percent_US.State).all()
     session.close()
 
     # Convert list of tuples into normal list
@@ -63,7 +67,7 @@ def option3():
 @app.route("/api/data")
 def statePercent():
     session = Session(engine)
-    results = session.query(Percent.State, Percent.Nuclear,Percent.Coal,Percent.Natural_Gas,Percent.Petroleum,Percent.Hydro,Percent.Geothermal,Percent.Solar_PV,Percent.Wind,Percent.Biomass_and_Other).all()
+    results = session.query(Percent_US.State, Percent_US.Nuclear,Percent_US.Coal,Percent_US.Natural_Gas,Percent_US.Petroleum,Percent_US.Hydro,Percent_US.Geothermal,Percent_US.Solar_PV,Percent_US.Wind,Percent_US.Biomass_and_Other).all()
     session.close()
     
     # # Getting each percentage in a a liat 
@@ -103,35 +107,57 @@ def statePercent():
     return jsonify(result_percent_data)
 
 
+
 @app.route("/api/data2")
 def stateGeneration():
-    session = Session(engine)
-    results = session.query(Generation.YEAR, Generation.STATE, Generation.STATE)
-    session.close()
+    session2 = Session(engine)
+    results2 = session2.query(Generation_US.year, Generation_US.coal, Generation_US.natural_gas, Generation_US.nuclear, Generation_US.renewables, Generation_US.petroleum_and_other).all()
+    session2.close()
     
-    # # Getting each percentage in a a liat 
-    # Nuclear = [result[1] for result in results]
-    # Coal = [result[2] for result in results]
-    # Natural_Gas = [result[3] for result in results]
-    # Petroleum = [result[4] for result in results]
-    # Hydro = [result[5] for result in results]
-    # Geothermal = [result[6] for result in results]
-    # Solar_PV = [result[7] for result in results]
-    # Wind = [result[8] for result in results]
-    # Biomass_and_Other = [result[9] for result in results]
-
-    # # Value for first state
-    # values = Nuclear[0],Coal[0],Natural_Gas[0],Petroleum[0],Hydro[0],Geothermal[0],Solar_PV[0],Wind[0],Biomass_and_Other[0]
-            
-
-    result_percent_data = [{
-        "type": "bar",
-        
-        "title": {"text": f'<b>Percentage Energy Usage 2019</b> <br> {results[0][0]}',
-                "font": { "size": 18} },
-    }]
+    test2 = list(np.ravel(results2))
     
-    return jsonify(result_percent_data)
+       
+    return jsonify(results2)
+
+
+
+@app.route("/api/data3")
+def NoElectricityWorld():
+    session3 = Session(engine)
+    results3 = session3.query(No_Electricity_World.Country, No_Electricity_World.Code, No_Electricity_World.Year, No_Electricity_World.Number_people_without_electricity).all()
+    session3.close()
+    
+    test3 = list(np.ravel(results3))
+       
+    return jsonify(results3)
+
+
+
+
+@app.route("/api/data4")
+def worldGeneration():
+    session4 = Session(engine)
+    results4 = session4.query(Generation_World.Country, Generation_World.Code, Generation_World.Year, Generation_World.Solar, Generation_World.Wind, Generation_World.Hydro, Generation_World.Geo_Biomass_Other).all()
+    session4.close()
+    
+    test4 = list(np.ravel(results4))
+       
+    return jsonify(results4)
+
+
+
+
+@app.route("/api/data5")
+def worldConsumption():
+    session5 = Session(engine)
+    results5 = session5.query(Consumption_World.Country, Consumption_World.Code, Consumption_World.Year, Consumption_World.Traditional_biomass, Consumption_World.Hydro, Consumption_World.Solar, Consumption_World.Wind,  Consumption_World.Geo_Biomass_Other).all()
+    session5.close()
+    
+    test5 = list(np.ravel(results5))
+       
+    return jsonify(results5)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
