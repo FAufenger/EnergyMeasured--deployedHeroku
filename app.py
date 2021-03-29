@@ -116,14 +116,15 @@ def stateGeneration():
     
     test2 = list(np.ravel(results2))
     
-    # List of lists for axis values 
+    # List of lists for axis values (making new column (total energy))
     year_list = []
     coal_list = []
     natural_gas_list = []
     nuclear_list = []
     renewables_list = []
     petroleum_and_other_list = []
-
+    year_of_energy = []
+    total_energy = [] 
 
     for entry in results2:
         year_list.append(entry[0])
@@ -132,7 +133,8 @@ def stateGeneration():
         nuclear_list.append(entry[3])
         renewables_list.append(entry[4])
         petroleum_and_other_list.append(entry[5])
-
+        year_of_energy = [entry[1], entry[2], entry[3], entry[4], entry[5]]
+        total_energy.append(sum(year_of_energy))
 
     trace1 = {
         "x": year_list,
@@ -179,7 +181,16 @@ def stateGeneration():
         "type": "lines+markers"
     }    
 
-    data = [trace1, trace2, trace3, trace4, trace5]
+    trace6 = {
+        "x": year_list,
+
+        "y": total_energy,
+        "name": 'Total Energy',
+        "marker": {"color": "#9400D3"},
+        "type": "lines+markers"
+    }   
+
+    data = [trace1, trace2, trace3, trace4, trace5, trace6]
     
     return jsonify(data)
 
@@ -205,6 +216,7 @@ def worldGeneration():
     
     test4 = list(np.ravel(results4))
        
+    
     return jsonify(results4)
 
 

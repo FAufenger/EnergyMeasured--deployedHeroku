@@ -30,12 +30,9 @@ function buildPlot2() {
               bgcolor: 'rgba(255, 255, 255, 0)',
               bordercolor: 'rgba(255, 255, 255, 0)'
             },
-            barmode: 'group',
-            bargap: 0.15,
-            bargroupgap: 0.2
-          };
+        };
 
-        Plotly.newPlot("barPlotUS", data, layout);
+        Plotly.newPlot("linePlotUS", data, layout);
     });
 }
 
