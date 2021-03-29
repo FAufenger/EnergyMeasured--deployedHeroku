@@ -30,49 +30,46 @@ function buildPlot1() {
 
     function getStateData(chosenState) {
       currentValues = [];
-      currentState = [];
-      nuclear = [];
-      coal = [];
-      naturalGas =[];
-      petroleum =[];
-      hydro =[];
-      geothermal =[];
-      solar =[];
-      wind = [];
-      biomassOther =[];
+      currentState = "";
+      nuclear = "";
+      coal = "";
+      naturalGas = "";
+      petroleum ="";
+      hydro = "";
+      geothermal = "";
+      solar = "";
+      wind = "";
+      biomassOther = "";
 
       for (var i = 0; i < response.length; i++) {
         if (response[i][0] === chosenState) {
-          currentState.push(response[i][0]);
-          nuclear.push(response[i][1]);
-          coal.push(response[i][2]);
-          naturalGas.push(response[i][3]);
-          petroleum.push(response[i][4]);
-          hydro.push(response[i][5]);
-          geothermal.push(response[i][6]);
-          solar.push(response[i][7]);
-          wind.push(response[i][8]);
-          biomassOther.push(response[i][9]);
+          currentState = response[i][0];
+          nuclear = response[i][1];
+          coal = response[i][2];
+          naturalGas = response[i][3];
+          petroleum = response[i][4];
+          hydro = response[i][5];
+          geothermal = response[i][6];
+          solar = response[i][7];
+          wind = response[i][8];
+          biomassOther = response[i][9];
           currentValues.push(nuclear, coal, naturalGas, petroleum, hydro, geothermal, solar, wind, biomassOther);
         }
       }
     };
- 
+  
     
     // Default State Data
     setBubblePlot('Alabama');
     
-
     function setBubblePlot(chosenState) {
       getStateData(chosenState);
 
-
+      // Set data to be plotted
       trace1 = {
         type: "pie",
-        showlegend: false,
-        rotation: 0,
         textinfo: "text+percent",
-        textposition: "outside",
+        textposition: "inside",
         values: currentValues,
         text: ["Nuclear", "Coal", "Natural Gas", "Petroleum", "Hydro", "Geothermal", "Solar-PV", "Wind", "Biomass/ Other"],
         hoverinfo: "skip",
@@ -86,20 +83,23 @@ function buildPlot1() {
           text: `<b>Percentage Energy Usage</b> <br> ${currentState}`,
           font: { "size": 20 }
         },
-      };
-    
-      const data = trace1;
+        showlegend: true,
+        labels: ["Nuclear", "Coal", "Natural Gas", "Petroleum", "Hydro", "Geothermal", "Solar-PV", "Wind", "Biomass/ Other"]
 
+      };
+     
+      var data = [trace1];
+      
       const layout = {
         // width: 400,
         height: 500,
-        // //autosize: true,
-        margin: { t: 5, r: 10, l: 10, b: 200 }
+        // autosize: true,
+        margin: { t: 10, r: 10, l: 10, b: 10 }
       };
 
       Plotly.newPlot("circlePlot", data, layout);
     }
-
+    
 
     // var innerContainer = document.querySelector('[data-num="0"');
     var stateSelector = document.querySelector('.statedata1');
@@ -124,12 +124,10 @@ function buildPlot1() {
 
 
 
-
-
 //  Line chart US
 function buildPlot2() {
   /* data route */
-  // Static chart so can imoort data directly through python in the app.py
+  // Static chart so can import data directly through python in the app.py
   const url = "/api/data2";
   d3.json(url).then(function (response) {
 
@@ -166,7 +164,88 @@ function buildPlot2() {
   });
 }
 
+function buildTable() {
+  /* data route */
+  // Static chart so can import data directly through python in the app.py
+  const url = "/api/data3";
+  d3.json(url).then(function (response) {
+
+    var rowEvenColor = "lightgrey";
+    var rowOddColor = "#506784";
+    var rowOdd = "white";
+    var rowEven = "black";
+
+    const data = [{
+      type: 'table',
+      //columnorder: [1,2],
+      columnwidth: [75,60,50,50,50,50,50,50,50,50],
+      header: {
+        values: [["<b>State</b>"], ["<b>Nuclear</b>"], ["<b>Coal</b>"], ["<b>Nat.<br>Gas</b>"], 
+                ["<b>Petrol</b>"], ["<b>Hydro</b>"], ["<b>Geo<br>Ther</b>"], ["<b>Solar</b>"], 
+                ["<b>Wind</b>"], ["<b>Bio<br>mass</b>"]],
+        align: ["center"],
+        height: 40,
+        line: {width: 1, color: 'black'},
+        rotation: 90,
+        fill: {color: "grey"},
+        font: {family: "Arial", size: 12, color: "white"}
+      },
+      cells: {
+        values: response,
+        align: ["left", "center"],
+        height: 25,
+        line: {color: "black", width: 1},
+        fill: {color: [[rowOddColor,rowEvenColor,rowOddColor, rowEvenColor,rowOddColor, rowEvenColor,
+                        rowOddColor,rowEvenColor,rowOddColor, rowEvenColor,rowOddColor, rowEvenColor,
+                        rowOddColor,rowEvenColor,rowOddColor, rowEvenColor,rowOddColor, rowEvenColor,
+                        rowOddColor,rowEvenColor,rowOddColor, rowEvenColor,rowOddColor, rowEvenColor,
+                        rowOddColor,rowEvenColor,rowOddColor, rowEvenColor,rowOddColor, rowEvenColor,
+                        rowOddColor,rowEvenColor,rowOddColor, rowEvenColor,rowOddColor, rowEvenColor,
+                        rowOddColor,rowEvenColor,rowOddColor, rowEvenColor,rowOddColor, rowEvenColor,
+                        rowOddColor,rowEvenColor,rowOddColor, rowEvenColor,rowOddColor, rowEvenColor,
+                        rowOddColor,rowEvenColor,rowOddColor ]]},
+
+        font: {family: "Arial", size: 11, color: [[rowOdd, rowEven, rowOdd, rowEven, rowOdd, rowEven, rowOdd, rowEven, rowOdd, rowEven,
+                                                  rowOdd, rowEven, rowOdd, rowEven, rowOdd, rowEven, rowOdd, rowEven, rowOdd, rowEven, 
+                                                  rowOdd, rowEven, rowOdd, rowEven, rowOdd, rowEven, rowOdd, rowEven, rowOdd, rowEven,
+                                                  rowOdd, rowEven, rowOdd, rowEven, rowOdd, rowEven, rowOdd, rowEven, rowOdd, rowEven,
+                                                  rowOdd, rowEven, rowOdd, rowEven, rowOdd, rowEven, rowOdd, rowEven, rowOdd, rowEven,
+                                                  rowOdd]]}
+      }
+    }]
+
+    // const layout = {
+    //   title: 'US Power Generation',
+    //   xaxis: {
+    //     tickfont: {
+    //       size: 14,
+    //       color: 'rgb(107, 107, 107)'
+    //     }
+    //   },
+    //   yaxis: {
+    //     title: 'Billion kilowatthours',
+    //     titlefont: {
+    //       size: 16,
+    //       color: 'rgb(107, 107, 107)'
+    //     },
+    //     tickfont: {
+    //       size: 14,
+    //       color: 'rgb(107, 107, 107)'
+    //     }
+    //   },
+    //   legend: {
+    //     x: 0,
+    //     y: 1.0,
+    //     bgcolor: 'rgba(255, 255, 255, 0)',
+    //     bordercolor: 'rgba(255, 255, 255, 0)'
+    //   },
+    // };
+
+    Plotly.newPlot("TablePlotUS", data);
+  });
+}
 
 // Function call  
 buildPlot1();
 buildPlot2();
+buildTable();

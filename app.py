@@ -5,7 +5,7 @@ import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
-from flask import Flask, render_template, redirect, jsonify, request, url_for
+from flask import Flask, render_template, redirect, jsonify, request, url_for, session
 
 
 # from flask_sqlalchemy import SQLAlchemy
@@ -69,21 +69,6 @@ def option2():
 @app.route("/option3/")
 def option3():
     return render_template("map.html")
-
-
-    # # Getting each percentage in a a liat
-    # Nuclear = [result[1] for result in results]
-    # Coal = [result[2] for result in results]
-    # Natural_Gas = [result[3] for result in results]
-    # Petroleum = [result[4] for result in results]
-    # Hydro = [result[5] for result in results]
-    # Geothermal = [result[6] for result in results]
-    # Solar_PV = [result[7] for result in results]
-    # Wind = [result[8] for result in results]
-    # Biomass_and_Other = [result[9] for result in results]
-
-    # # Value for first state
-    # values = Nuclear[0],Coal[0],Natural_Gas[0],Petroleum[0],Hydro[0],Geothermal[0],Solar_PV[0],Wind[0],Biomass_and_Other[0]
 
 
 
@@ -201,16 +186,32 @@ def stateGeneration():
     return jsonify(data)
 
 
-# @app.route("/api/data3")
-# def NoElectricityWorld():
-#     session3 = Session(engine)
-#     results3 = session3.query(No_Electricity_World.Country, No_Electricity_World.Code, No_Electricity_World.Year, No_Electricity_World.Number_people_without_electricity).all()
-#     session3.close()
+@app.route("/api/data3")
+def USpercentageTable():
+    session3 = Session(engine)
+    results3 = session3.query(Percent_US.State, Percent_US.Nuclear, Percent_US.Coal, Percent_US.Natural_Gas, Percent_US.Petroleum,
+                           Percent_US.Hydro, Percent_US.Geothermal, Percent_US.Solar_PV, Percent_US.Wind, Percent_US.Biomass_and_Other).all()
+    session3.close()
 
-#     test3 = list(np.ravel(results3))
+    test3 = list(np.ravel(results3))
 
-#     return jsonify(results3)
+    # Getting each percentage in a a list
+    State = [result[0] for result in results3]
+    Nuclear = [result[1] for result in results3]
+    Coal = [result[2] for result in results3]
+    Natural_Gas = [result[3] for result in results3]
+    Petroleum = [result[4] for result in results3]
+    Hydro = [result[5] for result in results3]
+    Geothermal = [result[6] for result in results3]
+    Solar_PV = [result[7] for result in results3]
+    Wind = [result[8] for result in results3]
+    Biomass_and_Other = [result[9] for result in results3]
 
+    USdata = [State, Nuclear, Coal, Natural_Gas, Petroleum, Hydro, Geothermal, Solar_PV, Wind, Biomass_and_Other]
+
+  
+    return jsonify(USdata)
+    # return  render_template("option1.html", tables = [test3.to_html(classes='data')], titles=test3.columns.values)
 
 @app.route("/api/data4")
 def worldGeneration():
