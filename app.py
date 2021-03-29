@@ -71,14 +71,6 @@ def option3():
     return render_template("map.html")
 
 
-##### Back end #####
-@app.route("/api/data1")
-def statePercent():
-    session = Session(engine)
-    results = session.query(Percent_US.State, Percent_US.Nuclear, Percent_US.Coal, Percent_US.Natural_Gas, Percent_US.Petroleum,
-                            Percent_US.Hydro, Percent_US.Geothermal, Percent_US.Solar_PV, Percent_US.Wind, Percent_US.Biomass_and_Other).all()
-    session.close()
-
     # # Getting each percentage in a a liat
     # Nuclear = [result[1] for result in results]
     # Coal = [result[2] for result in results]
@@ -93,26 +85,38 @@ def statePercent():
     # # Value for first state
     # values = Nuclear[0],Coal[0],Natural_Gas[0],Petroleum[0],Hydro[0],Geothermal[0],Solar_PV[0],Wind[0],Biomass_and_Other[0]
 
-    result_percent_data1 = [{
-        "type": "pie",
-        "showlegend": False,
-        "rotation": 0,
-        "textinfo": "text+percent",
-        "textposition": "inside",
-        "values": results[0][1:],
-        "text": ["Nuclear", "Coal", "Natural Gas", "Petroleum", "Hydro", "Geothermal", "Solar-PV", "Wind", "Biomass/ Other"],
-        "hoverinfo": "skip",
-        "autopct": '%1.1f%%',
-        "marker": {
-            "colors": ["#347C17", "#6960EC", "#43C6DB", "#3EA055", "#FFFF00", "#FF7F50", "#4B0082", "#C48189", "#B93B8F"],
-            "labels": ["Nuclear", "Coal", "Natural Gas", "Petroleum", "Hydro", "Geothermal", "Solar-PV", "Wind", "Biomass/ Other"],
-            "hoverinfo": "skip"
-        },
-        "title": {"text": f'<b>Percentage Energy Usage</b> <br> {results[0][0]}',
-                  "font": {"size": 18}},
-    }]
 
-    return jsonify(result_percent_data1)
+
+##### Back end #####
+@app.route("/api/data1")
+def statePercent():
+    session1 = Session(engine)
+    results1 = session1.query(Percent_US.State, Percent_US.Nuclear, Percent_US.Coal, Percent_US.Natural_Gas, Percent_US.Petroleum,
+                            Percent_US.Hydro, Percent_US.Geothermal, Percent_US.Solar_PV, Percent_US.Wind, Percent_US.Biomass_and_Other).all()
+    session1.close()
+
+    # Need to add event listeners, better to do with js, moved code to js  format in logicUS
+
+    # result_percent_data1 = [{
+    #     "type": "pie",
+    #     "showlegend": False,
+    #     "rotation": 0,
+    #     "textinfo": "text+percent",
+    #     "textposition": "outside",
+    #     "values": results[0][1:],
+    #     "text": ["Nuclear", "Coal", "Natural Gas", "Petroleum", "Hydro", "Geothermal", "Solar-PV", "Wind", "Biomass/ Other"],
+    #     "hoverinfo": "skip",
+    #     "autopct": '%1.1f%%',
+    #     "marker": {
+    #         "colors": ["#347C17", "#6960EC", "#43C6DB", "#3EA055", "#FFFF00", "#FF7F50", "#4B0082", "#C48189", "#B93B8F"],
+    #         "labels": ["Nuclear", "Coal", "Natural Gas", "Petroleum", "Hydro", "Geothermal", "Solar-PV", "Wind", "Biomass/ Other"],
+    #         "hoverinfo": "skip"
+    #     },
+    #     "title": {"text": f'<b>Percentage Energy Usage</b> <br> {results[0][0]}',
+    #               "font": {"size": 18}},
+    # }]
+
+    return jsonify(results1)
 
 
 @app.route("/api/data2")
