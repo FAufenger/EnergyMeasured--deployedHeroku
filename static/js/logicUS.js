@@ -3,8 +3,6 @@ function buildPlot2() {
     const url = "/api/data2";
     d3.json(url).then(function(response) {
 
-        console.log(response);
-        
         const data = response;
 
         const layout = {
