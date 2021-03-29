@@ -11,10 +11,8 @@ from flask import Flask, render_template, redirect, jsonify, request, url_for
 
 # from flask_sqlalchemy import SQLAlchemy
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///db.sqlite"
-
 # # Remove tracking modifications
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 # db = SQLAlchemy(app)
 
 # reflect an existing database into a new model
@@ -37,33 +35,45 @@ Consumption_World = Base.classes.world_consumption
 
 app = Flask(__name__)
 
- 
+
+###################
+## Routess
+###################
+
+
+#### Front end ####
 @app.route("/")
 def home():
 
-     # Create our session (link) from Python to the DB
-    session = Session(engine)
-    """Return a list of all states"""
-    # Query all passengers
-    results = session.query(Percent_US.State).all()
-    session.close()
+    #  # Create our session (link) from Python to the DB
+    # session = Session(engine)
+    # """Return a list of all states"""
+    # # Query all passengers
+    # results = session.query(Percent_US.State).all()
+    # session.close()
 
-    # Convert list of tuples into normal list
-    all_states = list(np.ravel(results))
+    # # Convert list of tuples into normal list
+    # all_states = list(np.ravel(results))
     return render_template("index.html")
+
 
 @app.route("/option1/")
 def option1():
     return render_template("option1.html")
 
+
 @app.route("/option2/")
 def option2():
     return render_template("option2.html")
+
 
 @app.route("/option3/")
 def option3():
     return render_template("map.html")
 
+
+
+##### Back end #####
 @app.route("/api/data1")
 def statePercent():
     session = Session(engine)
@@ -138,7 +148,6 @@ def stateGeneration():
 
     trace1 = {
         "x": year_list,
-
         "y": coal_list,
         "name": 'Coal',
         "marker": {"color": "#2C2624"},
@@ -147,7 +156,6 @@ def stateGeneration():
     
     trace2 = {
         "x": year_list,
-
         "y": natural_gas_list,
         "name": 'Natural Gas',
         "marker": {"color": "#1CA2ED"},
@@ -156,7 +164,6 @@ def stateGeneration():
 
     trace3 = {
         "x": year_list,
-
         "y": nuclear_list,
         "name": 'Nuclear',
         "marker": {"color": "#E5ED1C"},
@@ -165,7 +172,6 @@ def stateGeneration():
 
     trace4 = {
         "x": year_list,
-
         "y": renewables_list,
         "name": 'Renewable',
         "marker": {"color": "#36C92C"},
@@ -174,7 +180,6 @@ def stateGeneration():
     
     trace5 = {
         "x": year_list,
-
         "y": petroleum_and_other_list,
         "name": 'Petroleum and Other',
         "marker": {"color": "#C92C2C"},
@@ -183,7 +188,6 @@ def stateGeneration():
 
     trace6 = {
         "x": year_list,
-
         "y": total_energy,
         "name": 'Total Energy',
         "marker": {"color": "#9400D3"},
@@ -195,15 +199,15 @@ def stateGeneration():
     return jsonify(data)
 
 
-@app.route("/api/data3")
-def NoElectricityWorld():
-    session3 = Session(engine)
-    results3 = session3.query(No_Electricity_World.Country, No_Electricity_World.Code, No_Electricity_World.Year, No_Electricity_World.Number_people_without_electricity).all()
-    session3.close()
+# @app.route("/api/data3")
+# def NoElectricityWorld():
+#     session3 = Session(engine)
+#     results3 = session3.query(No_Electricity_World.Country, No_Electricity_World.Code, No_Electricity_World.Year, No_Electricity_World.Number_people_without_electricity).all()
+#     session3.close()
     
-    test3 = list(np.ravel(results3))
+#     test3 = list(np.ravel(results3))
 
-    return jsonify(results3)
+#     return jsonify(results3)
 
 
 
@@ -231,6 +235,18 @@ def worldConsumption():
     test5 = list(np.ravel(results5))
        
     return jsonify(results5)
+
+
+
+@app.route("/api/data6")
+def NoElectricityWorld():
+    session6 = Session(engine)
+    results6 = session6.query(No_Electricity_World.Country, No_Electricity_World.Code, No_Electricity_World.Year, No_Electricity_World.Number_people_without_electricity).all()
+    session6.close()
+    
+    test6 = list(np.ravel(results6))
+
+    return jsonify(results6)
 
 
 
