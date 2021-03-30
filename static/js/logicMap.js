@@ -61,6 +61,60 @@ function createMap() {
 createMap();
 
 
+// function createMarkers(response) {
+
+//   // Pull the "Quakes" property off of response.data(features)
+//   var data1 = response.element_in_data1;
+
+//   // Initialize an array to hold earthquake markers
+//   var marker1 = [];
+//   var magnitude = [];
+
+//   // Loop through the stations array
+//   for (var index = 0; index < data1.length; index++) {
+//       var element_in_data1 = data1[index];
+//       // To pull list of coordinates from coord list
+//       var coordList = element_in_data1.geometry.coordinates;
+
+//       /////// Earthquakes Layer ///////
+//       // For each latitude and longitude, create a marker and bind a popup with the data
+//       var someMark = L.marker(coordList.slice(0, 2).reverse())
+//           .bindPopup("<h3>" + features.properties.place + "</h3><h3>Magnitude: " + features.properties.mag + "</h3><h3>Depth: "+ coordList.slice(2, 3) + "</h3>");
+//       // Add earthquarkmark to preset list
+//       marker1.push(someMark);
+
+//       // ////// Magnitude Layer ///////
+//       // // Add magnitude color to visiulation
+//       // var depthOfQuake = coordList.slice(2, 3)
+//       // var magnitudeList = L.circleMarker(coordList.slice(0, 2).reverse(), {
+//       //     color: "white",
+//       //     fillColor: chooseColor(depthOfQuake),
+//       //     fillOpacity: 0.4,
+//       //     weight: 1.5,
+//       //     radius: radiusHelper(features.properties.mag)
+//       // })
+//       //     .bindPopup("<h3>" + features.properties.place + "<h3><h3>Magnitude: " + features.properties.mag + "</h3><h3>Depth: "+ coordList.slice(2, 3) + "</h3>");
+//       // ;
+
+//       // //  Add magnitude to list for map 
+//       // magnitude.push(magnitudeList);
+
+//       //console.log(coordList.slice(2, 3));
+//   };
+//   // // Troubleshooting checking values
+//   // console.log(coordList.slice(2, 3));
+//   // console.log(magnitude);
+
+//   // Create a layer group made from the bike markers array, pass it into the createMap function
+//   createMap(L.layerGroup(marker1));
+// };
+
+
+// // Perform an API call to the EarthQuake API to get information. Call createMarkers when complete
+// d3.json(someUrl, createMarkers);
+
+
+
 ///////////////////////////////////
 //     Basic map test layout     //
 ///////////////////////////////////
