@@ -113,7 +113,7 @@ def stateGeneration():
                               Generation_US.nuclear, Generation_US.renewables, Generation_US.petroleum_and_other).all()
     session2.close()
 
-    test2 = list(np.ravel(results2))
+    #test2 = list(np.ravel(results2))
 
     # List of lists for axis values (making new column (total energy))
     year_list = []
@@ -195,7 +195,7 @@ def USpercentageTable():
                            Percent_US.Hydro, Percent_US.Geothermal, Percent_US.Solar_PV, Percent_US.Wind, Percent_US.Biomass_and_Other).all()
     session3.close()
 
-    test3 = list(np.ravel(results3))
+    #test3 = list(np.ravel(results3))
 
     # Getting each percentage in a a list
     State = [result[0] for result in results3]
@@ -222,7 +222,7 @@ def worldGeneration():
                               Generation_World.Solar, Generation_World.Wind, Generation_World.Hydro, Generation_World.Geo_Biomass_Other).all()
     session4.close()
 
-    test4 = list(np.ravel(results4))
+    #test4 = list(np.ravel(results4))
 
     return jsonify(results4)
 
@@ -234,7 +234,7 @@ def worldConsumption():
                               Consumption_World.Hydro, Consumption_World.Solar, Consumption_World.Wind,  Consumption_World.Geo_Biomass_Other).all()
     session5.close()
 
-    test5 = list(np.ravel(results5))
+    #test5 = list(np.ravel(results5))
 
     return jsonify(results5)
 
@@ -246,7 +246,7 @@ def NoElectricityWorld():
                               No_Electricity_World.Year, No_Electricity_World.Number_people_without_electricity).all()
     session6.close()
 
-    test6 = list(np.ravel(results6))
+    #test6 = list(np.ravel(results6))
 
     return jsonify(results6)
 
