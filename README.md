@@ -1,1 +1,1 @@
-# mp-project2
+# Energy Consumption and Generation project connected to Heroku
