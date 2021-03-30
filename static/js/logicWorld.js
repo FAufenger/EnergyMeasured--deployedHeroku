@@ -340,7 +340,7 @@ function buildPlot6() {
 
         ///// Need if statement for make Responsive
         // Otherwise chart resets each move of window
-        
+
         // if (currentYear!== null) {
         //     pass
         // } else {
@@ -391,7 +391,7 @@ function buildPlot6() {
                 // width: 1200,
                 // height: 400,
                 //margin: { t: 50, r: 500, l: 500, b: 50 },
-                title: '<b>Number of People Withour Electricity</b>',
+                title: '<b>Number of People Without Electricity</b>',
                 xaxis: {
                     tickfont: {
                         size: 14,
