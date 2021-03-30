@@ -239,7 +239,7 @@ function buildPlot5() {
             const layout = {
                 // width: 1200,
                 // height: 400,
-                title: '<b>Power Consupltion on a Global Scale</b>',
+                title: '<b>Power Consumption on a Global Scale</b>',
                 xaxis: {
                     tickfont: {
                         size: 14,
@@ -338,17 +338,6 @@ function buildPlot6() {
             }
         };
 
-        ///// Need if statement for make Responsive
-        // Otherwise chart resets each move of window
-
-        // if (currentYear!== null) {
-        //     pass
-        // } else {
-        //     // Default Country Data
-        //     setBubblePlot('Afghanistan');
-        // }
-
-        setBubblePlot('Afghanistan');
 
         // Default Country Data
         setBubblePlot('Afghanistan');
@@ -438,14 +427,7 @@ function buildPlot6() {
     });
 }
 
-//function makeResponsive() {}
+
 buildPlot4();
 buildPlot5();
 buildPlot6();
-
-// // Call main function
-// makeResponsive();
-
-// // Event listener for window resize.
-// // When the browser window is resized, makeResponsive() is called.
-// d3.select(window).on("resize", makeResponsive);

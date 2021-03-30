@@ -5,18 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Project 2: Renewalable Energy</title>
+    <title>Project 2: Renewable Energy</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!-- Our CSS -->
-    <!-- <link rel="stylesheet" type="text/css" href="static/css/style.css"> -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #8acf82;">
         <a class="navbar-brand" href="/">
-            <img src="static/img/icon.png" width="35" height="35" alt="">
-            <!-- <img src="{{ url_for('static', filename='img/icon.png') }}" width="35" height="35" alt=""> -->
+            <img src="static/css/icon.png" width="35" height="35" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -33,21 +33,25 @@
       
     <div class="container">
         <div class="jumbotron text-center">
-            <h2>Project 2: Renewalable Energy</h2>
-            <h4>Taking a closer look at renewalable energy generation and consumption</h4>
+          <canvas id="canvas-basic"></canvas>
+            <h2>Project 2: Renewable Energy</h2>
+            <h4>Taking a closer look at renewable energy generation and consumption</h4>
+          
         </div>
-        
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-sm">
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus laboriosam cupiditate omnis doloribus sapiente iste pariatur voluptatibus similique ab eius, minus necessitatibus debitis ipsa laudantium ducimus explicabo eaque id inventore.</p>
-            <!-- <img id="sourceExplain" src="static/img/explainEnergySource.png" alt="Source explination png"/> -->
-            <!-- <img src="{{ url_for('static', filename='img/icon.png') }}" width="35" height="35" alt=""> -->
-            <!-- <img src="static/img/icon.png" width="35" height="35" alt=""> -->
+            <div id="circlePlot"></div>
           </div>
-        </div> 
+        </div>   -->
     </div>
-   
-       
+  
+    
+  
+  
+    
+
+    
     
 
     <!-- Leaflet JS -->
@@ -62,6 +66,9 @@
     <!-- Our JavaScript -->
     <!-- <script type="text/javascript" src="static/logic.js"></script> -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/logic2.js') }}"></script>
+    <!--Granim JavaScript Library  -->
+    <script src="https://cdn.tutorialjinni.com/granim/2.0.0/granim.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/granimfile.js') }}"></script>
 
     
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
