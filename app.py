@@ -29,10 +29,11 @@ Base.prepare(engine, reflect=True)
 # Classes is part of mapping and is required
 Percent_US = Base.classes.us_percentage
 Generation_US = Base.classes.us_generation
+US_Lat_Lng = Base.classes.usStateLatLng
 No_Electricity_World = Base.classes.world_no_electricity
 Generation_World = Base.classes.world_generation
 Consumption_World = Base.classes.world_consumption
-
+World_Lat_Lng = Base.classes.worldLatLng
 
 app = Flask(__name__)
 
@@ -82,28 +83,22 @@ def statePercent():
                             Percent_US.Hydro, Percent_US.Geothermal, Percent_US.Solar_PV, Percent_US.Wind, Percent_US.Biomass_and_Other).all()
     session1.close()
 
-    # Need to add event listeners, better to do with js, moved code to js  format in logicUS
 
-    # result_percent_data1 = [{
-    #     "type": "pie",
-    #     "showlegend": False,
-    #     "rotation": 0,
-    #     "textinfo": "text+percent",
-    #     "textposition": "outside",
-    #     "values": results[0][1:],
-    #     "text": ["Nuclear", "Coal", "Natural Gas", "Petroleum", "Hydro", "Geothermal", "Solar-PV", "Wind", "Biomass/ Other"],
-    #     "hoverinfo": "skip",
-    #     "autopct": '%1.1f%%',
-    #     "marker": {
-    #         "colors": ["#347C17", "#6960EC", "#43C6DB", "#3EA055", "#FFFF00", "#FF7F50", "#4B0082", "#C48189", "#B93B8F"],
-    #         "labels": ["Nuclear", "Coal", "Natural Gas", "Petroleum", "Hydro", "Geothermal", "Solar-PV", "Wind", "Biomass/ Other"],
-    #         "hoverinfo": "skip"
-    #     },
-    #     "title": {"text": f'<b>Percentage Energy Usage</b> <br> {results[0][0]}',
-    #               "font": {"size": 18}},
-    # }]
+    # Need to add lat and long to us_percent to be able to map (leaflet)
+    session7 = Session(engine)
+    results7 = session7.query(US_Lat_Lng.stateAbb,US_Lat_Lng.latitude,
+                              US_Lat_Lng.longitude,US_Lat_Lng.state).all()
+    session7.close()
 
-    return jsonify(results1)
+    tempList = []
+    combinedList = []
+    
+    for i in range(0, 51):
+        tempList = []
+        tempList = results1[i] + results7[i]
+        combinedList.append(tempList)
+
+    return jsonify(combinedList)
 
 
 @app.route("/api/data2")
@@ -112,8 +107,6 @@ def stateGeneration():
     results2 = session2.query(Generation_US.year, Generation_US.coal, Generation_US.natural_gas,
                               Generation_US.nuclear, Generation_US.renewables, Generation_US.petroleum_and_other).all()
     session2.close()
-
-    #test2 = list(np.ravel(results2))
 
     # List of lists for axis values (making new column (total energy))
     year_list = []
@@ -195,8 +188,6 @@ def USpercentageTable():
                            Percent_US.Hydro, Percent_US.Geothermal, Percent_US.Solar_PV, Percent_US.Wind, Percent_US.Biomass_and_Other).all()
     session3.close()
 
-    #test3 = list(np.ravel(results3))
-
     # Getting each percentage in a a list
     State = [result[0] for result in results3]
     Nuclear = [result[1] for result in results3]
@@ -211,7 +202,6 @@ def USpercentageTable():
 
     USdata = [State, Nuclear, Coal, Natural_Gas, Petroleum, Hydro, Geothermal, Solar_PV, Wind, Biomass_and_Other]
 
-  
     return jsonify(USdata)
     # return  render_template("option1.html", tables = [test3.to_html(classes='data')], titles=test3.columns.values)
 
@@ -221,8 +211,9 @@ def worldGeneration():
     results4 = session4.query(Generation_World.Country, Generation_World.Code, Generation_World.Year,
                               Generation_World.Solar, Generation_World.Wind, Generation_World.Hydro, Generation_World.Geo_Biomass_Other).all()
     session4.close()
-
+    
     #test4 = list(np.ravel(results4))
+    # Need to add event listeners, better to do with js, moved code to js  format in logicUS
 
     return jsonify(results4)
 
@@ -234,8 +225,6 @@ def worldConsumption():
                               Consumption_World.Hydro, Consumption_World.Solar, Consumption_World.Wind,  Consumption_World.Geo_Biomass_Other).all()
     session5.close()
 
-    #test5 = list(np.ravel(results5))
-
     return jsonify(results5)
 
 
@@ -246,10 +235,19 @@ def NoElectricityWorld():
                               No_Electricity_World.Year, No_Electricity_World.Number_people_without_electricity).all()
     session6.close()
 
-    #test6 = list(np.ravel(results6))
-
     return jsonify(results6)
 
+
+
+@app.route("/api/data8")
+def WorldLatLng():
+    session8 = Session(engine)
+    results8 = session8.query(World_Lat_Lng.countryAbb,World_Lat_Lng.latitude,
+                              World_Lat_Lng.longitude,World_Lat_Lng.country).all()
+    session8.close()
+
+
+    return jsonify(results8)
 
 if __name__ == "__main__":
     app.run(debug=True)

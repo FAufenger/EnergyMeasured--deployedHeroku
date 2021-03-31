@@ -1,4 +1,7 @@
-function createMap() {
+/* data retrival route */
+var urlStatePercent ="/api/data1";
+
+function createMap(statePercentMarker) {
 
   // Create the tile layer that will be the background of our map
   var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -42,7 +45,7 @@ function createMap() {
 
   // Create an overlayMaps object to hold the bikeStations layer
   var overlayMaps = {
-      // "Title1": Can add values in from createmap(),
+       "US Energy Consumption per State": statePercentMarker
       // "Title2": Can add values in from createmap()
   };
 
@@ -54,64 +57,43 @@ function createMap() {
   });
 
   // Create a layer control, pass in the baseMaps and overlayMaps. Add the layer control to the map
-  L.control.layers(baseMaps)
-  .addTo(map);
+  L.control.layers(baseMaps, overlayMaps, {
+    collapsed: false
+  }).addTo(map);
 }
 
-createMap();
 
 
-// function createMarkers(response) {
+function createMarkers(response) {
 
-//   // Pull the "Quakes" property off of response.data(features)
-//   var data1 = response.element_in_data1;
+  // var data1 = response.element_in_data1;
 
-//   // Initialize an array to hold earthquake markers
-//   var marker1 = [];
-//   var magnitude = [];
+  // Initialize an array to hold earthquake markers
+  var marker1 = [];
+  // var magnitude = [];
 
-//   // Loop through the stations array
-//   for (var index = 0; index < data1.length; index++) {
-//       var element_in_data1 = data1[index];
-//       // To pull list of coordinates from coord list
-//       var coordList = element_in_data1.geometry.coordinates;
+  // Loop through the stations array
+  for (var index = 0; index < response.length; index++) {
+      var element_in_data1 = response[index];
+      
+      // For each latitude and longitude, create a marker and bind a popup with the data
+      var someMark = L.marker(element_in_data1.slice(11, 13))
+          .bindPopup("<h5>Energy usage for :<b></h5><h5>"+ element_in_data1[0] +"</b></h5><hr><h5>Nuclear: " + element_in_data1[1] + "%</h5><h5>Coal: "+  element_in_data1[2] + "%</h5>" +
+                    "<h5>Naturel Gas: " + element_in_data1[3] + "%</h5><h5>Petroleum: " + element_in_data1[4] + "%</h5><h5>Hydro: "+  element_in_data1[5] + "%</h5>" +
+                    "<h5>Geothermal: " + element_in_data1[6] + "%</h5><h5>Solar: " + element_in_data1[7] + "%</h5><h5>Wind: "+  element_in_data1[8] + "%</h5>" +
+                    "<h5>Biomass & Other: " + element_in_data1[9] + "%</h5>");
 
-//       /////// Earthquakes Layer ///////
-//       // For each latitude and longitude, create a marker and bind a popup with the data
-//       var someMark = L.marker(coordList.slice(0, 2).reverse())
-//           .bindPopup("<h3>" + features.properties.place + "</h3><h3>Magnitude: " + features.properties.mag + "</h3><h3>Depth: "+ coordList.slice(2, 3) + "</h3>");
-//       // Add earthquarkmark to preset list
-//       marker1.push(someMark);
+      // Add earthquarkmark to preset list
+      marker1.push(someMark);
+  };
 
-//       // ////// Magnitude Layer ///////
-//       // // Add magnitude color to visiulation
-//       // var depthOfQuake = coordList.slice(2, 3)
-//       // var magnitudeList = L.circleMarker(coordList.slice(0, 2).reverse(), {
-//       //     color: "white",
-//       //     fillColor: chooseColor(depthOfQuake),
-//       //     fillOpacity: 0.4,
-//       //     weight: 1.5,
-//       //     radius: radiusHelper(features.properties.mag)
-//       // })
-//       //     .bindPopup("<h3>" + features.properties.place + "<h3><h3>Magnitude: " + features.properties.mag + "</h3><h3>Depth: "+ coordList.slice(2, 3) + "</h3>");
-//       // ;
-
-//       // //  Add magnitude to list for map 
-//       // magnitude.push(magnitudeList);
-
-//       //console.log(coordList.slice(2, 3));
-//   };
-//   // // Troubleshooting checking values
-//   // console.log(coordList.slice(2, 3));
-//   // console.log(magnitude);
-
-//   // Create a layer group made from the bike markers array, pass it into the createMap function
-//   createMap(L.layerGroup(marker1));
-// };
+  // Create a layer group made from the bike markers array, pass it into the createMap function
+  createMap(L.layerGroup(marker1));
+};
 
 
-// // Perform an API call to the EarthQuake API to get information. Call createMarkers when complete
-// d3.json(someUrl, createMarkers);
+// Perform an API call to the EarthQuake API to get information. Call createMarkers when complete
+d3.json(urlStatePercent, createMarkers);
 
 
 
