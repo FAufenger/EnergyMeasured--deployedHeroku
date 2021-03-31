@@ -7,8 +7,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Numeric, Text, Float
 
 
-csvfilesUS = ["./Resources/US/us_percentage.csv", "./Resources/US/generation-major-source.csv"]
-csvfilesWorld = ["./Resources/World/number-without-electricity-by-region.csv", "./Resources/World/renewable-energy-gen.csv", "./Resources/World/renewable_energy_consumption.csv"]
+csvfilesUS = ["./Resources/US/us_percentage.csv", "./Resources/US/generation-major-source.csv", "./Resources/US/usStateLatLng.csv"]
+csvfilesWorld = ["./Resources/World/number-without-electricity-by-region.csv", "./Resources/World/renewable-energy-gen.csv", "./Resources/World/renewable_energy_consumption.csv", "./Resources/World/worldLatLng.csv"]
+
 engine = create_engine("sqlite:///US_Energy_DB.sqlite")
 conn = engine.connect()
 
@@ -45,6 +46,17 @@ class us_generation_power(Base):
     renewables = Column(Integer)
     petroleum_and_other = Column(Integer)
 
+class latLngUS(Base):
+    __tablename__ = 'usStateLatLng'
+    
+    id = Column(Integer, primary_key=True)
+    stateAbb = Column(Text)
+    latitude = Column(Numeric(precision=8, scale=6))
+    longitude = Column(Numeric(precision=8, scale=6))
+    state = Column(Text)
+
+# Ways to define column: 
+# Text, Float, Integer, Numeric(precision=8, scale=6) 
 
 ## World ##
 class NumbNoElectricity(Base):
@@ -85,10 +97,22 @@ class worldConsumption(Base):
     Wind = Column(Integer)
     Geo_Biomass_Other = Column(Integer)
 
+
+class latLngWorld(Base):
+    __tablename__ = 'worldLatLng'
+    
+    id = Column(Integer, primary_key=True)
+    countryAbb = Column(Text)
+    latitude = Column(Numeric(precision=8, scale=6))
+    longitude = Column(Numeric(precision=8, scale=6))
+    country = Column(Text)
+
     # def __repr__(self):
     #     return f"id={self.id}, name={self.title}"
 
 
+
+# create all tables reflect to bind
 Base.metadata.create_all(engine)
 metadata = MetaData(bind=engine)
 metadata.reflect()
@@ -102,6 +126,9 @@ percent_us_data = df.to_dict(orient='records')
 df = pd.read_csv(csvfilesUS[1], dtype=object)
 generation_us_data = df.to_dict(orient='records')
 ###
+df = pd.read_csv(csvfilesUS[2], dtype=object)
+lat_lng_us_data = df.to_dict(orient='records')
+###
 ###
 df = pd.read_csv(csvfilesWorld[0], dtype=object)
 no_electricity_world_data = df.to_dict(orient='records')
@@ -111,6 +138,9 @@ generation_world_data = df.to_dict(orient='records')
 ###
 df = pd.read_csv(csvfilesWorld[2], dtype=object)
 consumption_world_data = df.to_dict(orient='records')
+###
+df = pd.read_csv(csvfilesWorld[3], dtype=object)
+lat_lng_world_data = df.to_dict(orient='records')
 
 
 
@@ -121,6 +151,8 @@ percent_us_table = sqlalchemy.Table('us_percentage', metadata, PrimaryKeyConstra
                             autoload=True, extend_existing=True)
 generation_us_table = sqlalchemy.Table('us_generation', metadata, PrimaryKeyConstraint('id'),
                             autoload=True, extend_existing=True)
+us_lat_lng_table = sqlalchemy.Table('usStateLatLng', metadata, PrimaryKeyConstraint('id'),
+                            autoload=True, extend_existing=True)
 ###
 no_electricity_world_table = sqlalchemy.Table('world_no_electricity', metadata, PrimaryKeyConstraint('id'),
                             autoload=True, extend_existing=True)
@@ -128,13 +160,20 @@ generation_world_table = sqlalchemy.Table('world_generation', metadata, PrimaryK
                             autoload=True, extend_existing=True)
 consumption_world_table = sqlalchemy.Table('world_consumption', metadata, PrimaryKeyConstraint('id'),
                             autoload=True, extend_existing=True)                            
+world_lat_lng_table = sqlalchemy.Table('worldLatLng', metadata, PrimaryKeyConstraint('id'),
+                            autoload=True, extend_existing=True)
 
+###
+# Execute (old) delete() and  execute (new) insert ()
 ###
 conn.execute(percent_us_table.delete())
 conn.execute(percent_us_table.insert(), percent_us_data)
 
 conn.execute(generation_us_table.delete())
 conn.execute(generation_us_table.insert(), generation_us_data)
+
+conn.execute(us_lat_lng_table.delete())
+conn.execute(us_lat_lng_table.insert(), lat_lng_us_data)
 ###
 conn.execute(no_electricity_world_table.delete())
 conn.execute(no_electricity_world_table.insert(), no_electricity_world_data)
@@ -144,3 +183,6 @@ conn.execute(generation_world_table.insert(), generation_world_data)
 
 conn.execute(consumption_world_table.delete())
 conn.execute(consumption_world_table.insert(), consumption_world_data)
+
+conn.execute(world_lat_lng_table.delete())
+conn.execute(world_lat_lng_table.insert(), lat_lng_world_data)
