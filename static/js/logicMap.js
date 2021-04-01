@@ -69,7 +69,7 @@ function createMarkers(response) {
   // var data1 = response.element_in_data1;
 
   // Initialize an array to hold earthquake markers
-  var marker1 = [];
+  var markerUS = [];
   // var magnitude = [];
 
   // Loop through the stations array
@@ -84,16 +84,17 @@ function createMarkers(response) {
                     "<h5>Biomass & Other: " + element_in_data1[9] + "%</h5>");
 
       // Add earthquarkmark to preset list
-      marker1.push(someMark);
+      markerUS.push(someMark);
   };
 
   // Create a layer group made from the bike markers array, pass it into the createMap function
-  createMap(L.layerGroup(marker1));
+  createMap(L.layerGroup(markerUS));
 };
 
 
 // Perform an API call to the EarthQuake API to get information. Call createMarkers when complete
 d3.json(urlStatePercent, createMarkers);
+
 
 
 
