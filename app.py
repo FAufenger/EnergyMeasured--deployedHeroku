@@ -45,6 +45,7 @@ app = Flask(__name__)
 
 #### Front end ####
 @app.route("/")
+@app.route("/home/")
 def home():
 
     #  # Create our session (link) from Python to the DB
@@ -72,6 +73,10 @@ def option2():
 @app.route("/option3/")
 def option3():
     return render_template("map.html")
+
+@app.route("/option4/")
+def option4():
+    return render_template("sources.html")
 
 
 

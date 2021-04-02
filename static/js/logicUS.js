@@ -94,7 +94,9 @@ function buildPlot1() {
         // width: 400,
         height: 500,
         // autosize: true,
-        margin: { t: 10, r: 10, l: 10, b: 10 }
+        margin: { t: 10, r: 10, l: 10, b: 10 },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)'
       };
 
       Plotly.newPlot("circlePlot", data, layout);
@@ -158,6 +160,8 @@ function buildPlot2() {
         bgcolor: 'rgba(255, 255, 255, 0)',
         bordercolor: 'rgba(255, 255, 255, 0)'
       },
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      plot_bgcolor: 'rgba(0,0,0,0)'
     };
 
     Plotly.newPlot("linePlotUS", data, layout);
@@ -215,34 +219,13 @@ function buildTable() {
       }
     }]
 
-    // const layout = {
-    //   title: 'US Power Generation',
-    //   xaxis: {
-    //     tickfont: {
-    //       size: 14,
-    //       color: 'rgb(107, 107, 107)'
-    //     }
-    //   },
-    //   yaxis: {
-    //     title: 'Billion kilowatthours',
-    //     titlefont: {
-    //       size: 16,
-    //       color: 'rgb(107, 107, 107)'
-    //     },
-    //     tickfont: {
-    //       size: 14,
-    //       color: 'rgb(107, 107, 107)'
-    //     }
-    //   },
-    //   legend: {
-    //     x: 0,
-    //     y: 1.0,
-    //     bgcolor: 'rgba(255, 255, 255, 0)',
-    //     bordercolor: 'rgba(255, 255, 255, 0)'
-    //   },
-    // };
+    const layout = {
+      title: '<b>US Power Generation</b>',
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      plot_bgcolor: 'rgba(0,0,0,0)'
+    }
 
-    Plotly.newPlot("TablePlotUS", data);
+    Plotly.newPlot("TablePlotUS", data, layout);
   });
 }
 

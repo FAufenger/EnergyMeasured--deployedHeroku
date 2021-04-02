@@ -17,45 +17,62 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #8acf82;">
     <a class="navbar-brand" href="/">
-      <img src="static/img/icon.png" width="35" height="35" alt="">
+      <img src="{{ url_for('static', filename='/img/icon.png') }}" width="35" height="35" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link" href="{{ url_for('option1') }}">United States</a>
-        <a class="nav-item nav-link" href="{{ url_for('option2') }}">Global</a>
-        <a class="nav-item nav-link" href="{{ url_for('option3') }}">Map</a>
-      </div>
+      <ul class="navbar-nav">
+        <li><a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a></li>
+        <li><a class="nav-item nav-link" href="{{ url_for('option1') }}">United States</a></li>
+        <li><a class="nav-item nav-link" href="{{ url_for('option2') }}">Global</a></li>
+        <li><a class="nav-item nav-link" href="{{ url_for('option3') }}">Map</a></li>
+        <li><a class="nav-item nav-link" href="{{ url_for('option4') }}">Sources</a></li>
+      </ul>
     </div>
   </nav>
 
-    <br>
-    <br>
-    <br>
-    <br>
+  <br><br><br>
+
+  <canvas id="canvas-basic"></canvas>
 
   <div class="container">
     <div class="text-center">
-      <canvas id="canvas-basic"></canvas>
-      <h2>Project 2: Renewable Energy</h2>
-      <h4>Taking a closer look at renewable energy generation and consumption</h4>
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Project 2: Renewable Energy</h2>
+          <br>
+          <h4>Taking a closer look at renewable energy generation and consumption</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <br><br>
+
+  <div class="container">
+    <div class="text-center">
+      <div class="row">
+        <div class="col-md-4">
+          <h4><a href="{{ url_for('option1') }}">United States</a></h4>
+          <a href="{{ url_for('option1') }}"><img src="{{ url_for('static', filename='/img/usPage.png') }}" width="250" height="250" alt="US Page Preview"></a>
+        </div>
+        <div class="col-md-4">
+          <h4><a href="{{ url_for('option3') }}">Map</h4>
+          <a href="{{ url_for('option3') }}"><img src="{{ url_for('static', filename='/img/mapPage.png') }}" width="250" height="250" alt="Map Page Preview"></a>
+        </div>
+        <div class="col-md-4">
+          <h4><a href="{{ url_for('option2') }}">Global</a></h4>
+          <a href="{{ url_for('option2') }}"><img src="{{ url_for('static', filename='/img/worldPage.png') }}" width="250" height="250" alt="World Page Preview"></a>
+        </div>
+      </div>
     </div>
   </div>
 
-  
-  <!-- <div class="row">
-          <div class="col-sm">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus laboriosam cupiditate omnis doloribus sapiente iste pariatur voluptatibus similique ab eius, minus necessitatibus debitis ipsa laudantium ducimus explicabo eaque id inventore.</p>
-            <div id="circlePlot"></div>
-          </div>
-        </div>   -->
 
 
-        <!-- <p> hellooo</p> -->
 
 
 

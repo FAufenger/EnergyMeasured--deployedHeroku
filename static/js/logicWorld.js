@@ -108,6 +108,8 @@ function buildPlot4() {
                         color: 'rgb(107, 107, 107)'
                     }
                 },
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)'
                 //margin: { t: 50, r: 500, l: 500, b: 50 }
             };
 
@@ -257,6 +259,8 @@ function buildPlot5() {
                         color: 'rgb(107, 107, 107)'
                     }
                 },
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)'
                 //margin: { t: 50, r: 500, l: 500, b: 50 }
             };
 
@@ -399,7 +403,9 @@ function buildPlot6() {
                     }
                 },
                 autosize: true,
-                showlegend: true
+                showlegend: true,
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)'
 
             };
 

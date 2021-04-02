@@ -10,11 +10,11 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <!-- Our CSS -->
-  <!-- <link rel="stylesheet" type="text/css" href="static/css/style.css"> -->
-  <!-- <script type="text/javascript" src="{{ url_for('static', filename='css/style.css') }}"></script> -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
 </head>
 
-<body>
+<body style="background-color:#48a0705e;">
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #8acf82;">
     <a class="navbar-brand" href="/">
       <img src="{{ url_for('static', filename='img/icon.png') }}" width="35" height="35" alt="">
@@ -25,44 +25,51 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
         <a class="nav-item nav-link" href="{{ url_for('option1') }}">United States</a>
         <a class="nav-item nav-link" href="{{ url_for('option2') }}">Global</a>
         <a class="nav-item nav-link" href="{{ url_for('option3') }}">Map</a>
-        <a class="nav-item nav-link" href="{{ url_for('option4') }}">Sources</a>
+        <a class="nav-item nav-link active" href="{{ url_for('option4') }}">Sources</a>
       </div>
     </div>
   </nav>
 
-  <div>
-    <p>Sources, everything has to come from some where</p>
-  </div>
+  <br><br>
   
   <div class="row">
     <div class="col-md-12">
-      <div class="text-center"></div>
-      <p>Gotta give credit where it is due. The data collected for this project and more information reguarding 
-          Energy can be found: <br> 
-        <br><br><br>
-        <strong>United States data and percentages NEI and EIA:</strong><hr>
-        https://www.nei.org/resources/statistics/state-electricity-generation-fuel-shares<br>
-        https://www.eia.gov/energyexplained/electricity/electricity-in-the-us.php<br>
-        <br><br>
-        <strong>Word data and information from 'Our World in Data':</strong><hr>
-        https://ourworldindata.org<br>
-        https://ourworldindata.org/energy-overview<br>
-        https://ourworldindata.org/grapher/renewable-energy-consumption?country=~OWID_WRL<br>
-        https://ourworldindata.org/grapher/renewable-energy-gen?country=~OWID_WRL
+      <canvas id="canvas-basic"></canvas>
+      <div class="text-center">
+        <h5>Everything has to come from some where!</h5>
+        <br>
+        <p>The data collected for this project and more information reguarding 
+          Energy can be found: <br>
         </p>
-      <div></div>
-      <p></p>
+        <div> 
+          <br><hr>
+          <strong>United States data and percentages NEI and EIA:</strong><br>
+          <a href="https://www.nei.org/resources/statistics/state-electricity-generation-fuel-shares">NEI (US State Generation)</a><br>
+          <a href="https://www.eia.gov/energyexplained/electricity/electricity-in-the-us.php">US Energy Information Administration</a>
+          <br><br><hr>
+          <strong>Word data and information from 'Our World in Data':</strong><br>
+          <a href="https://ourworldindata.org">Our World In Data</a><br>
+          <a href="https://ourworldindata.org/energy-overview">Our World In Data: Overview</a><br>
+          <a href="https://ourworldindata.org/grapher/renewable-energy-consumption?country=~OWID_WRL<">Our World In Data: consumption</a><br>
+          <a href="https://ourworldindata.org/grapher/renewable-energy-gen?country=~OWID_WRL">Our World In Data: Generation</a>
+          <hr>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div>
-      <p>Thanks for stopping by. Have a nice day!</p>
+
+  <footer class="page-footer blue-grey darken-4">
+    <div class="text-center">
+      <p>Thanks for stopping by.<br>
+        Have a nice day!</p>
     </div>
+  </footer>
 
-    
 
   <!--Granim JavaScript Library  -->
   <script src="https://cdn.tutorialjinni.com/granim/2.0.0/granim.js"></script>
@@ -81,6 +88,8 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-</body>
+    
+
+  </body>
 
 </html>
