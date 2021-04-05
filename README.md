@@ -1,7 +1,7 @@
 # Energy Consumption and Generation project connected to Heroku
 
 
-### Create visualizations depicting use of renewable energy to record US efforts and possibly compare to global,  showing which states are generating the most renewable energy resources.
+### Create visualizations depicting use of renewable energy to record US efforts and compare to global, showing which states are generating the most renewable energy resources.
 
  * Web Scraping
 
